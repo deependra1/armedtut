@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PostRequest;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -21,8 +22,9 @@ class PostController extends Controller
         return view('posts.edit', compact('post'));
     }
 
-    public function store(Request $request){
-        Post::create($request->all());
+    public function store(PostRequest $request){
+        $data = $request->validated();
+        Post::create($data);
         return redirect()->route('posts.index')->with('success', 'Post created successfully.');
     }
     public function update(Request $request, Post $post){
