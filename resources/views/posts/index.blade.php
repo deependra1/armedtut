@@ -18,6 +18,8 @@
         <thead>
         <tr>
             <th>Title</th>
+            <th>Category</th>
+            <th>Tags</th>
             <th>Action</th>
         </tr>
         </thead>
@@ -25,6 +27,12 @@
         @foreach($posts as $post)
             <tr>
                 <td>{{ $post->title }}</td>
+                <td>{{ $post->category->name }}</td>
+                <td>
+                    @foreach($post->tags as $tag)
+                        {{ $tag->title }} ,
+                    @endforeach
+                </td>
                 <td>
                     <a class="btn btn-outline-info" href="{{ route('posts.show', $post) }}">Show</a>
                     <a class="btn btn-outline-info" href="{{ route('posts.edit', $post) }}">Edit</a>
