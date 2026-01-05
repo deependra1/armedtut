@@ -2,13 +2,12 @@
 
 namespace Database\Factories;
 
-use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\=Post>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\=Media>
  */
-class PostFactory extends Factory
+class MediaFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -19,8 +18,8 @@ class PostFactory extends Factory
     {
         return [
             'title' => $this->faker->sentence(),
-            'body' => $this->faker->paragraph(),
-            'category_id' => Category::factory(),
+            'path' => $this->faker->imageUrl(),
+            'type' => $this->faker->randomElement(['image', 'video']),
         ];
     }
 }

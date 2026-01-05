@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -44,5 +45,35 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function posts(){
+        return $this->hasMany(Post::class);
+    }
+
+    public function media(){
+        return $this->hasMany(Media::class);
+    }
+
+    public function postComments(){
+        return $this->hasManyThrough(
+            Comment::class,
+            Post::class,
+        'user_id',
+            'commentable_id',
+        )->where('commentable_type', Post::class);
+    }
+
+    public function mediaComments(){
+        return $this->hasManyThrough(
+            Comment::class,
+            Media::class,
+            'user_id',
+            'commentable_id'
+        )->where('commentable_type', Media::class);
+    }
+
+    public function allComments(){
+        return $this->postComments()->get()->merge($this->mediaComments()->get());
     }
 }

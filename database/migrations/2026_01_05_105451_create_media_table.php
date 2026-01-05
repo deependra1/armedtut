@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::disableForeignKeyConstraints();
-        Schema::create('posts', function (Blueprint $table) {
+        Schema::create('media', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->text('body');
-            $table->foreignId('category_id')->constrained()->onDelete('restrict');
+            $table->string('path');
+            $table->string('type');
             $table->foreignId('user_id')->constrained()->onDelete('restrict');
             $table->timestamps();
         });
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('posts');
+        Schema::dropIfExists('media');
     }
 };
